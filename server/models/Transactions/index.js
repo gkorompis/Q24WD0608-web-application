@@ -1,7 +1,8 @@
-import { createDoc, findDocByQuery, updateDocByQuery } from "./dao/index.js";
+import { createDoc, findDocByQuery, updateDocByQuery, deleteDocByQuery } from "./dao/index.js";
 const TransactionsModel = {
     createDoc,
     findDocByQuery,
-    updateDocByQuery
+    updateDocByQuery,
+    deleteDocByQuery
 };
 export default TransactionsModel;

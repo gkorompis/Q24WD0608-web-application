@@ -10,7 +10,8 @@ const transactionRoute = express.Router();
 const {
     postController,
     getController,
-    updateController
+    updateController,
+    deleteController
 } = TransactionController;
 
 transactionRoute.post(
@@ -25,13 +26,17 @@ transactionRoute.get(
     getController
 )
 
-
 transactionRoute.put(
     '/',
     [],
     updateController
 )
 
+transactionRoute.delete(
+    '/one/:orderId',
+    [],
+    deleteController
+)
 
 
 export default transactionRoute;
