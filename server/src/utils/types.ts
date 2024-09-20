@@ -9,28 +9,31 @@ export interface IndexParameter<T> {
     query2?: T,
     isNotSet?: any
 }
+
 /********** USER */
-export interface UserDocument {
+export interface UsersDocument {
     name: string,
     email: string,
     username: string,
     role: string,
     password: string,
-    organization: string[],
-    createdAt?: any,
+    store: string,
+    createdDate?: any,
+    status: string,
     _id?: string
 }
-export interface UserDocumentQuery {
+export interface UsersDocumentQuery {
     name?: string,
     email?: string,
     username?: string,
     role?: string,
     password?: string,
-    createdAt?: any,
-    organization?: string[],
-    permission?: any[],
+    store?: string,
+    createdDate?: any,
+    status?: string,
     _id?: string
 }
+
 /********** JOB */
 export interface JobDocument {
     createdBy: string,

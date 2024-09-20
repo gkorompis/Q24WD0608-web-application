@@ -7,7 +7,8 @@ import { securedHeader } from './utils/securedHeader.js';
 
 
 import {
-  transactionRoute,
+  transactionsRoute,
+  usersRoute
 } from './routes/index.js'
 
 const app = express();
@@ -48,7 +49,8 @@ app.use(
 // app.use('/request-component', requestComponentRoute);
 // app.use('/user', userRoute);
 // app.use('/login', loginRoute);
-app.use('/transactions', transactionRoute);
+app.use('/transactions', transactionsRoute);
+app.use('/users', usersRoute)
 // app.use('/requirement-form', requirementFormRoute);
 
 const PORT=5003

@@ -1,42 +1,42 @@
 import express from 'express';
-import { TransactionsController } from '../../controllers/index.js';
+import { UsersController } from '../../controllers/index.js';
 
 
 const app = express();
 app.use(express.json());
 
-const transactionsRoute = express.Router();
+const usersRoute = express.Router();
 
 const {
     postController,
     getController,
     updateController,
     deleteController
-} = TransactionsController;
+} = UsersController;
 
-transactionsRoute.post(
+usersRoute.post(
     '/',
     [],
     postController
 )
 
-transactionsRoute.get(
+usersRoute.get(
     '/',
     [],
     getController
 )
 
-transactionsRoute.put(
+usersRoute.put(
     '/',
     [],
     updateController
 )
 
-transactionsRoute.delete(
-    '/one/:orderId',
+usersRoute.delete(
+    '/one/:username',
     [],
     deleteController
 )
 
 
-export default transactionsRoute;
+export default usersRoute;

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { CLIENT_UNIQUE } from "../../../utils/global.js";
 // const ItemsTransactionSchema = new mongoose.Schema({
 //     itemId: { type: mongoose.Schema.Types.Mixed, required: true },
 //     item: { type: String, required: true },
@@ -52,7 +53,7 @@ const TransactionsDocumentSchema = new mongoose.Schema({
     currency: { type: String, required: true },
     // info acquired during login session info
     createdBy: { type: String, required: true },
-    store: { type: String, required: true },
+    store: { type: String, required: true, default: CLIENT_UNIQUE },
     //@ts-ignore
     role: { type: Array, default: function () { return ["super", this.createdBy]; } },
 });
