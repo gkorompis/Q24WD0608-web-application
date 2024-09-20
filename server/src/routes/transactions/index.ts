@@ -8,7 +8,9 @@ app.use(express.json());
 const transactionRoute = express.Router();
 
 const {
-    postController
+    postController,
+    getController,
+    updateController
 } = TransactionController;
 
 transactionRoute.post(
@@ -16,5 +18,20 @@ transactionRoute.post(
     [],
     postController
 )
+
+transactionRoute.get(
+    '/',
+    [],
+    getController
+)
+
+
+transactionRoute.put(
+    '/',
+    [],
+    updateController
+)
+
+
 
 export default transactionRoute;

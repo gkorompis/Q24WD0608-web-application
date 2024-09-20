@@ -38,9 +38,10 @@ app.use(cors({
 // app.use('/request-component', requestComponentRoute);
 // app.use('/user', userRoute);
 // app.use('/login', loginRoute);
-app.use('/transaction', transactionRoute);
+app.use('/transactions', transactionRoute);
 // app.use('/requirement-form', requirementFormRoute);
-app.listen(5003, () => {
-    console.log("listening at 5002");
+const PORT = 5003;
+app.listen(PORT, () => {
+    console.log("listening at " + PORT);
 });
 export const handler = serverless(app);

@@ -179,3 +179,52 @@ export interface RequirementFormDocumentQuery {
     organization?: any,
     permission?: any
 }
+
+/********** TRANSACTIONS COMPONENT */
+export interface ItemsTransaction {
+    item: string,
+    quantity: number,
+    unitPrice: number,
+    totalUnitPrice: number,
+    currency: string
+}
+
+export interface TransactionsDocument {
+    createdBy: string,
+    role?: string,
+    createdDate?: Date,
+    createdPayment: Date,
+    items: ItemsTransaction[],
+    transactionStatus: string,
+    store?: string,
+    totalPrice: any,
+    orderId: any,
+    transactionId: any,
+    currency: string,
+}
+export interface TransactionsDocumentQuery {
+    createdBy?: string,
+    role?: string,
+    createdDate?: Date,
+    createdPayment?: Date,
+    items?: any,
+    transactionStatus?: string,
+    store?: string,
+    totalPrice?: any,
+    orderId?: any,
+    transactionId?: any,
+    currency?: string,
+}
+// export interface TransactionsComponentDocumentQuery {
+//     createdBy?: string,
+//     requestTitle?: string,
+//     pageName?: string,
+//     pageType?: string,
+//     components?: {
+//         componentName: string,
+//         componentType: string,
+//         componentValue: any
+//     }
+//     createdAt?: Date,
+//     permission?: any[]
+// }

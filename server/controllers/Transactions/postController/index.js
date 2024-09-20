@@ -8,8 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const controllerName = "postController";
-const group = "Transaction";
-// import { RequestComponent } from '../../../models/index.js';
+const group = "Transactions";
+import { TransactionsModel } from "../../../models/index.js";
 // import { createTransactionAndGetToken } from '../../../utils/midtransClient.js';
 import { log } from '../../../utils/logger.js';
 // import { createPaymentLink } from '../../../utils/onlinePayment.js';
@@ -19,9 +19,7 @@ const Unit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         log(`${controllerName} at ${group}`);
         const document = req.body || {};
         //dao
-        // const response = await RequestComponent.createDoc({document})
-        // const response = await createPaymentLink();
-        const response = { trial: "test" };
+        const response = (yield TransactionsModel.createDoc({ document })) || { default: "" };
         //response
         log(`response ${controllerName} at ${group}`, response);
         return res.status(200).json({ response });
