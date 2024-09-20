@@ -24,7 +24,8 @@ export const Unit =async({query, query2, update, isNotSet}:IndexParameter<Transa
         console.log(">>>query2", query2);
 
     
-        const setUpdate = {$set: update} || {};
+        const updateBody = update || {routeTrails: ""};
+        const setUpdate = {$set: updateBody};
         const commandUpdate = isNotSet ? update : setUpdate;
         console.log('>>>commandUpdate', commandUpdate)
         const response = await Transactions.updateOne(conditionalQuery, commandUpdate );

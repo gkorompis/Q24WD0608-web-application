@@ -7,6 +7,7 @@ import { securedHeader } from './utils/securedHeader.js';
 
 
 import {
+  productsRoute,
   transactionsRoute,
   usersRoute
 } from './routes/index.js'
@@ -50,7 +51,9 @@ app.use(
 // app.use('/user', userRoute);
 // app.use('/login', loginRoute);
 app.use('/transactions', transactionsRoute);
-app.use('/users', usersRoute)
+app.use('/users', usersRoute);
+app.use('/products', productsRoute)
+
 // app.use('/requirement-form', requirementFormRoute);
 
 const PORT=5003

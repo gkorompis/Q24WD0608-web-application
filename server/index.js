@@ -4,7 +4,7 @@ import cors from 'cors';
 import express from 'express';
 import { logger } from './utils/morganConfig.js';
 import { securedHeader } from './utils/securedHeader.js';
-import { transactionsRoute, usersRoute } from './routes/index.js';
+import { productsRoute, transactionsRoute, usersRoute } from './routes/index.js';
 const app = express();
 // 1. use logger
 app.use(logger);
@@ -40,6 +40,7 @@ app.use(cors({
 // app.use('/login', loginRoute);
 app.use('/transactions', transactionsRoute);
 app.use('/users', usersRoute);
+app.use('/products', productsRoute);
 // app.use('/requirement-form', requirementFormRoute);
 const PORT = 5003;
 app.listen(PORT, () => {

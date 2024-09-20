@@ -64,7 +64,7 @@ const TransactionsDocumentSchema = new mongoose.Schema({
     store: {type:String, required: true, default: CLIENT_UNIQUE},
 
     //@ts-ignore
-    role: {type:Array, default: function(){return ["super", this.createdBy]}},
+    role: {type:String, enum: ["admin", "client"], default: "client"},
 })
 
 TransactionsDocumentSchema.pre('save', function(next) {

@@ -7,13 +7,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import Transactions from "../../schema/index.js";
 import { connectToDb } from "../../../../db/index.js";
-import Users from "../../schema/index.js";
 import { CLIENT_UNIQUE } from "../../../../utils/global.js";
-const functionName = "udpateDoc";
-const modelName = "Users";
-export const Unit = (_a) => __awaiter(void 0, [_a], void 0, function* ({ query, query2, update, isNotSet }) {
+const functionName = "findDoc";
+const modelName = "Transactions";
+export const Unit = (_a) => __awaiter(void 0, [_a], void 0, function* ({ query, query2 }) {
     try {
+        console.log(">>> global env:", { CLIENT_UNIQUE });
         const connection = yield connectToDb();
         console.log(">>>connecting", typeof connection);
         console.log(`>>>${functionName} at ${modelName}`);
@@ -23,15 +24,8 @@ export const Unit = (_a) => __awaiter(void 0, [_a], void 0, function* ({ query, 
                 query2 || { store: CLIENT_UNIQUE }
             ]
         };
-        console.log(">>>conditionQuery", conditionalQuery);
-        console.log(">>>query", query);
-        console.log(">>>query2", query2);
-        const updateBody = update || { routeTrails: "" };
-        const setUpdate = { $set: updateBody };
-        const commandUpdate = isNotSet ? update : setUpdate;
-        console.log('>>>commandUpdate', commandUpdate);
-        const response = yield Users.updateOne(conditionalQuery, commandUpdate);
-        console.log(">>>response", response);
+        const response = yield Transactions.find(conditionalQuery).exec();
+        console.log(">>>response", typeof response);
         return response;
     }
     catch (error) {

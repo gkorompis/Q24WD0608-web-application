@@ -55,7 +55,7 @@ const TransactionsDocumentSchema = new mongoose.Schema({
     createdBy: { type: String, required: true },
     store: { type: String, required: true, default: CLIENT_UNIQUE },
     //@ts-ignore
-    role: { type: Array, default: function () { return ["super", this.createdBy]; } },
+    role: { type: String, enum: ["admin", "client"], default: "client" },
 });
 TransactionsDocumentSchema.pre('save', function (next) {
     // Sum all totalUnitPrice fields from the items array

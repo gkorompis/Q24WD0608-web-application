@@ -26,7 +26,8 @@ export const Unit = (_a) => __awaiter(void 0, [_a], void 0, function* ({ query, 
         console.log(">>>conditionQuery", conditionalQuery);
         console.log(">>>query", query);
         console.log(">>>query2", query2);
-        const setUpdate = { $set: update } || {};
+        const updateBody = update || { routeTrails: "" };
+        const setUpdate = { $set: updateBody };
         const commandUpdate = isNotSet ? update : setUpdate;
         console.log('>>>commandUpdate', commandUpdate);
         const response = yield Transactions.updateOne(conditionalQuery, commandUpdate);

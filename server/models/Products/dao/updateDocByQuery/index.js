@@ -8,10 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { connectToDb } from "../../../../db/index.js";
-import Users from "../../schema/index.js";
+import Products from "../../schema/index.js";
 import { CLIENT_UNIQUE } from "../../../../utils/global.js";
 const functionName = "udpateDoc";
-const modelName = "Users";
+const modelName = "Products";
 export const Unit = (_a) => __awaiter(void 0, [_a], void 0, function* ({ query, query2, update, isNotSet }) {
     try {
         const connection = yield connectToDb();
@@ -30,7 +30,7 @@ export const Unit = (_a) => __awaiter(void 0, [_a], void 0, function* ({ query, 
         const setUpdate = { $set: updateBody };
         const commandUpdate = isNotSet ? update : setUpdate;
         console.log('>>>commandUpdate', commandUpdate);
-        const response = yield Users.updateOne(conditionalQuery, commandUpdate);
+        const response = yield Products.updateOne(conditionalQuery, commandUpdate);
         console.log(">>>response", response);
         return response;
     }

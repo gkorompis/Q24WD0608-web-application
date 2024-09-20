@@ -231,3 +231,32 @@ export interface TransactionsDocumentQuery {
 //     createdAt?: Date,
 //     permission?: any[]
 // }
+
+/********** PRODUCTS COMPONENT */
+
+export interface ProductsDocument {
+    createdBy: string,
+    role?: string,
+    createdDate?: Date,
+    createdPayment: Date,
+    items: ItemsTransaction[],
+    transactionStatus: string,
+    store?: string,
+    totalPrice: any,
+    orderId: any,
+    transactionId: any,
+    currency: string,
+}
+export interface ProductsDocumentQuery {
+    createdBy?: string,
+    role?: string,
+    createdDate?: Date,
+    createdPayment?: Date,
+    items?: any,
+    transactionStatus?: string,
+    store?: string,
+    totalPrice?: any,
+    orderId?: any,
+    transactionId?: any,
+    currency?: string,
+}
