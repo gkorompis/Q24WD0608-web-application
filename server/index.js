@@ -5,7 +5,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import { logger } from './utils/morganConfig.js';
 import { securedHeader } from './utils/securedHeader.js';
-import { loginRoute, logoutRoute, productsRoute, transactionsRoute, usersRoute } from './routes/index.js';
+import { loginRoute, logoutRoute, productsRoute, resetsRoute, transactionsRoute, usersRoute } from './routes/index.js';
 const app = express();
 // 1. use logger
 app.use(logger);
@@ -44,6 +44,7 @@ app.use('/transactions', transactionsRoute);
 app.use('/users', usersRoute);
 app.use('/products', productsRoute);
 app.use('/logout', logoutRoute);
+app.use('/reset', resetsRoute);
 // app.use('/requirement-form', requirementFormRoute);
 const PORT = 5003;
 app.listen(PORT, () => {

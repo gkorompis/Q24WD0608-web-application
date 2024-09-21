@@ -11,6 +11,7 @@ import {
   loginRoute,
   logoutRoute,
   productsRoute,
+  resetsRoute,
   transactionsRoute,
   usersRoute
 } from './routes/index.js'
@@ -59,6 +60,7 @@ app.use('/transactions', transactionsRoute);
 app.use('/users', usersRoute);
 app.use('/products', productsRoute);
 app.use('/logout', logoutRoute)
+app.use('/reset', resetsRoute)
 
 // app.use('/requirement-form', requirementFormRoute);
 
