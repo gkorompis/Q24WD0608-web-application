@@ -13,7 +13,10 @@ export const Unit =async({query, query2}:IndexParameter<TransactionsDocumentQuer
         const connection = await connectToDb();
         console.log(">>>connecting", typeof connection);
         console.log(`>>>${functionName} at ${modelName}`);
+        
 
+        console.log("conditionalQuery query:", query);
+        console.log("conditionalQuery quer2:", query2);
         const conditionalQuery = {
             $and: [
                 query || {store: CLIENT_UNIQUE},

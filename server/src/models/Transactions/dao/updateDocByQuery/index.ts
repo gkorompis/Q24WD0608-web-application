@@ -20,8 +20,8 @@ export const Unit =async({query, query2, update, isNotSet}:IndexParameter<Transa
             ]
         };
         console.log(">>>conditionQuery", conditionalQuery)
-        console.log(">>>query", query);
-        console.log(">>>query2", query2);
+        console.log("conditionalQuery query:", query);
+        console.log("conditionalQuery quer2:", query2);
 
     
         const updateBody = update || {routeTrails: ""};

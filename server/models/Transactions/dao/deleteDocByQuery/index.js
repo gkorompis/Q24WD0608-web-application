@@ -9,15 +9,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import TransactionsModel from "../../schema/index.js";
 import { connectToDb } from "../../../../db/index.js";
+import { CLIENT_UNIQUE } from "../../../../utils/global.js";
 const functionName = "deleteDoc";
 const modelName = "TransactionsModel";
-export const Unit = (_a) => __awaiter(void 0, [_a], void 0, function* ({ query }) {
+export const Unit = (_a) => __awaiter(void 0, [_a], void 0, function* ({ query, query2 }) {
     try {
+        // const connection = await connectToDb();
+        // console.log(">>>connecting", typeof connection);
+        // console.log(`>>>${functionName} at ${modelName}`);
+        // console.log(">>>>query to delete", query)
+        console.log(">>> global env:", { CLIENT_UNIQUE });
         const connection = yield connectToDb();
         console.log(">>>connecting", typeof connection);
         console.log(`>>>${functionName} at ${modelName}`);
-        console.log(">>>>query to delete", query);
-        const response = yield TransactionsModel.deleteOne(query);
+        console.log("conditionalQuery query:", query);
+        console.log("conditionalQuery quer2:", query2);
+        const conditionalQuery = {
+            $and: [
+                query || { store: CLIENT_UNIQUE },
+                query2 || { store: CLIENT_UNIQUE }
+            ]
+        };
+        const response = yield TransactionsModel.deleteOne(conditionalQuery);
         console.log(">>>response", response);
         return response;
     }

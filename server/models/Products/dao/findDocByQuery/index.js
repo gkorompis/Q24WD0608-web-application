@@ -7,11 +7,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import Transactions from "../../schema/index.js";
+import Products from "../../schema/index.js";
 import { connectToDb } from "../../../../db/index.js";
 import { CLIENT_UNIQUE } from "../../../../utils/global.js";
 const functionName = "findDoc";
-const modelName = "Transactions";
+const modelName = "Products";
 export const Unit = (_a) => __awaiter(void 0, [_a], void 0, function* ({ query, query2 }) {
     try {
         console.log(">>> global env:", { CLIENT_UNIQUE });
@@ -24,7 +24,7 @@ export const Unit = (_a) => __awaiter(void 0, [_a], void 0, function* ({ query, 
                 query2 || { store: CLIENT_UNIQUE }
             ]
         };
-        const response = yield Transactions.find(conditionalQuery).exec();
+        const response = yield Products.find(conditionalQuery).exec();
         console.log(">>>response", typeof response);
         return response;
     }

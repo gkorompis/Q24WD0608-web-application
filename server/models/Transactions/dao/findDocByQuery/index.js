@@ -18,6 +18,8 @@ export const Unit = (_a) => __awaiter(void 0, [_a], void 0, function* ({ query, 
         const connection = yield connectToDb();
         console.log(">>>connecting", typeof connection);
         console.log(`>>>${functionName} at ${modelName}`);
+        console.log("conditionalQuery query:", query);
+        console.log("conditionalQuery quer2:", query2);
         const conditionalQuery = {
             $and: [
                 query || { store: CLIENT_UNIQUE },

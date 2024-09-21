@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import { UsersModel } from '../../../models/index.js';
 import { log } from '../../../utils/logger.js';
+import { CLIENT_UNIQUE } from '../../../utils/global.js';
 
 const controllerName = "updateController"
 //foo
@@ -24,14 +25,16 @@ const Unit = async (req: Request, res: Response) =>{
             $and: [
                 {...query},
                 {...params},
-                {organization:{ $in: [sessionOrganization]}}
+                // {organization:{ $in: [sessionOrganization]}}
+                {store: CLIENT_UNIQUE}
             ]
         };
         query2 = {
             $and: [
                 {...query2},
                 {...params},
-                {organization:{ $in: [sessionOrganization]}}
+                // {organization:{ $in: [sessionOrganization]}}
+                {store: CLIENT_UNIQUE}
             ]
         }
         

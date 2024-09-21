@@ -1,5 +1,11 @@
 import express from 'express';
 import { TransactionsController } from '../../controllers/index.js';
+import { 
+    transactionsDeleteMiddlewares,
+    transactionsGetMiddlewares, 
+    transactionsPostMiddlewares, 
+    transactionsPutMiddlewares
+} from './middleware.js';
 
 
 const app = express();
@@ -16,25 +22,25 @@ const {
 
 transactionsRoute.post(
     '/',
-    [],
+    transactionsPostMiddlewares,
     postController
 )
 
 transactionsRoute.get(
     '/',
-    [],
+    transactionsGetMiddlewares,
     getController
 )
 
 transactionsRoute.put(
     '/',
-    [],
+    transactionsPutMiddlewares,
     updateController
 )
 
 transactionsRoute.delete(
     '/one/:orderId',
-    [],
+    transactionsDeleteMiddlewares,
     deleteController
 )
 

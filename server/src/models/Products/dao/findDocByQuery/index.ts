@@ -1,13 +1,13 @@
-import Transactions from "../../schema/index.js";
+import Products from "../../schema/index.js";
 import { connectToDb } from "../../../../db/index.js";
-import { IndexParameter, TransactionsDocumentQuery } from "../../../../utils/types.js";
+import { IndexParameter, ProductsDocumentQuery } from "../../../../utils/types.js";
 import { CLIENT_UNIQUE } from "../../../../utils/global.js";
 
 const functionName = "findDoc"
-const modelName = "Transactions"
+const modelName = "Products"
 
 
-export const Unit =async({query, query2}:IndexParameter<TransactionsDocumentQuery>)=>{
+export const Unit =async({query, query2}:IndexParameter<ProductsDocumentQuery>)=>{
     try {
         console.log(">>> global env:", {CLIENT_UNIQUE})
         const connection = await connectToDb();
@@ -21,7 +21,7 @@ export const Unit =async({query, query2}:IndexParameter<TransactionsDocumentQuer
             ]
         }
         
-        const response = await Transactions.find(conditionalQuery as TransactionsDocumentQuery).exec();
+        const response = await Products.find(conditionalQuery as ProductsDocumentQuery).exec();
         console.log(">>>response", typeof response);
         return response
     } catch(error){

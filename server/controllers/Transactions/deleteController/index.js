@@ -20,11 +20,34 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 import { TransactionsModel } from '../../../models/index.js';
 import { log } from '../../../utils/logger.js';
+import { CLIENT_UNIQUE } from '../../../utils/global.js';
 const controllerName = "deleteController";
 //foo
 const group = "Transactions";
 const Unit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        // //request parameters
+        // log(`${controllerName} at ${group}`);
+        // const params = (req && req.params) || (req && req.query) || {};
+        // console.log(">>>params", params, typeof params);
+        // const headers = req && req.headers;
+        // const {sessionOrganization} = headers;
+        // console.log(">>>organization", sessionOrganization);
+        // //foo
+        // const originalQuery = req.query as any || {} as any;
+        // let {query2, ...query} = originalQuery;
+        // console.log('>>>originalQuery', originalQuery);
+        // query = {
+        //     ...params,
+        //     ...originalQuery
+        // }
+        // console.log(">>> controller passed query", query)
+        // if(!Object.keys(query).length){
+        //     return res.status(400).json({
+        //         message: "order id is not found"
+        //     });
+        // }
+        // //daoc
         //request parameters
         log(`${controllerName} at ${group}`);
         const params = (req && req.params) || (req && req.query) || {};
@@ -32,20 +55,36 @@ const Unit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const headers = req && req.headers;
         const { sessionOrganization } = headers;
         console.log(">>>organization", sessionOrganization);
-        //foo
         const originalQuery = req.query || {};
         let { query2 } = originalQuery, query = __rest(originalQuery, ["query2"]);
         console.log('>>>originalQuery', originalQuery);
-        query = Object.assign(Object.assign({}, params), originalQuery);
-        console.log(">>> controller passed query", query);
-        if (!Object.keys(query).length) {
-            return res.status(400).json({
-                message: "order id is not found"
-            });
-        }
-        //daoc
+        query = {
+            $and: [
+                Object.assign({}, query),
+                Object.assign({}, params),
+                // {organization:{ $in: [sessionOrganization]}}
+                { store: CLIENT_UNIQUE }
+            ]
+        };
+        query2 = {
+            $and: [
+                Object.assign({}, query2),
+                Object.assign({}, params),
+                // {organization:{ $in: [sessionOrganization]}}
+                { store: CLIENT_UNIQUE }
+            ]
+        };
+        const body = req.body || {};
+        console.log(">>>request body:", body);
+        const { isNotSet } = body, update = __rest(body, ["isNotSet"]);
+        //dao
+        console.log(">>>updatequery", query.$and);
+        console.log(">>>updatequery2", query2.$and);
+        console.log(">>>update body", update);
         //foo
-        const response = yield TransactionsModel.deleteDocByQuery({ query });
+        // const response = await TransactionsModel.updateDocByQuery({query, query2, update, isNotSet})
+        //foo
+        const response = yield TransactionsModel.deleteDocByQuery({ query, query2 });
         //response
         log(`response ${controllerName} at ${group}`, response);
         return res.status(200).json(response);

@@ -7,16 +7,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import Transactions from "../../schema/index.js";
+import Products from "../../schema/index.js";
 import { connectToDb } from "../../../../db/index.js";
 const functionName = "createDoc";
-const modelName = "Transactions";
+const modelName = "Products";
 export const Unit = (_a) => __awaiter(void 0, [_a], void 0, function* ({ document }) {
     try {
         const connection = yield connectToDb();
         console.log(">>>connecting", typeof connection);
         console.log(`>>>${functionName} at ${modelName}`);
-        const newDocument = new Transactions(document);
+        const newDocument = new Products(document);
         console.log(">>>response", typeof newDocument);
         return newDocument.save();
     }

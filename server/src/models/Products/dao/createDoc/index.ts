@@ -1,17 +1,17 @@
-import Transactions from "../../schema/index.js"
+import Products from "../../schema/index.js"
 import { connectToDb } from "../../../../db/index.js";
-import { IndexParameter, TransactionsDocument } from "../../../../utils/types.js";
+import { IndexParameter, ProductsDocument } from "../../../../utils/types.js";
 
 const functionName = "createDoc"
-const modelName = "Transactions"
+const modelName = "Products"
 
-export const Unit =async({document}:IndexParameter<TransactionsDocument>)=>{
+export const Unit =async({document}:IndexParameter<ProductsDocument>)=>{
     try {
         const connection = await connectToDb();
         console.log(">>>connecting", typeof connection);
 
         console.log(`>>>${functionName} at ${modelName}`);
-        const newDocument = new Transactions(document) as any;
+        const newDocument = new Products(document) as any;
         console.log(">>>response", typeof newDocument);
 
         return newDocument.save();

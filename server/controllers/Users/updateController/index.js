@@ -20,6 +20,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 import { UsersModel } from '../../../models/index.js';
 import { log } from '../../../utils/logger.js';
+import { CLIENT_UNIQUE } from '../../../utils/global.js';
 const controllerName = "updateController";
 //foo
 const group = "Users";
@@ -39,14 +40,16 @@ const Unit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             $and: [
                 Object.assign({}, query),
                 Object.assign({}, params),
-                { organization: { $in: [sessionOrganization] } }
+                // {organization:{ $in: [sessionOrganization]}}
+                { store: CLIENT_UNIQUE }
             ]
         };
         query2 = {
             $and: [
                 Object.assign({}, query2),
                 Object.assign({}, params),
-                { organization: { $in: [sessionOrganization] } }
+                // {organization:{ $in: [sessionOrganization]}}
+                { store: CLIENT_UNIQUE }
             ]
         };
         const body = req.body || {};

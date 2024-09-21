@@ -47,7 +47,7 @@ const TransactionsDocumentSchema = new mongoose.Schema({
     transactionId: { type: String, required: true },
     transactionStatus: { type: String, default: "pending", required: true },
     createdDate: { type: Date, required: true, default: Date.now },
-    paymentDate: { type: Date },
+    paymentDate: { type: mongoose.Schema.Types.Mixed, default: "-" },
     items: { type: [ItemsTransactionSchema], default: [] },
     totalPrice: { type: Number, required: true },
     currency: { type: String, required: true },

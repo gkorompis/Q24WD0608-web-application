@@ -2,9 +2,10 @@
 import serverless from 'serverless-http';
 import cors from 'cors';
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import { logger } from './utils/morganConfig.js';
 import { securedHeader } from './utils/securedHeader.js';
-import { productsRoute, transactionsRoute, usersRoute } from './routes/index.js';
+import { loginRoute, logoutRoute, productsRoute, transactionsRoute, usersRoute } from './routes/index.js';
 const app = express();
 // 1. use logger
 app.use(logger);
@@ -12,6 +13,7 @@ app.use(logger);
 app.use(securedHeader);
 // 3. epxress.json
 app.use(express.json());
+app.use(cookieParser());
 // 4. cors
 const allowedOrigins = [
     "https://bikinin.site",
@@ -37,10 +39,11 @@ app.use(cors({
 // 6. routes
 // app.use('/request-component', requestComponentRoute);
 // app.use('/user', userRoute);
-// app.use('/login', loginRoute);
+app.use('/login', loginRoute);
 app.use('/transactions', transactionsRoute);
 app.use('/users', usersRoute);
 app.use('/products', productsRoute);
+app.use('/logout', logoutRoute);
 // app.use('/requirement-form', requirementFormRoute);
 const PORT = 5003;
 app.listen(PORT, () => {
