@@ -2,7 +2,8 @@ import { Request, Response } from 'express';
 
 import { UsersModel } from '../../../models/index.js';
 import { log } from '../../../utils/logger.js';
-import { CLIENT_UNIQUE } from '../../../utils/global.js';
+import { CLIENT_UNIQUE, SECRET_KEY, SECRET_REFRESH_KEY } from '../../../utils/global.js';
+import jwt from "jsonwebtoken";
 
 const controllerName = "updateController"
 //foo
@@ -15,7 +16,7 @@ const Unit = async (req: Request, res: Response) =>{
         const params = (req && req.params) || (req && req.query) || {};
         console.log(">>>params", params, typeof params);
         const headers = req && req.headers;
-        const {sessionOrganization} = headers;
+        const {sessionOrganization, sessionRole} = headers;
         console.log(">>>organization", sessionOrganization);
 
         const originalQuery = req.query as any || {} as any;
@@ -47,6 +48,30 @@ const Unit = async (req: Request, res: Response) =>{
         console.log(">>>update body", update);
         //foo
         const response = await UsersModel.updateDocByQuery({query, query2, update, isNotSet})
+
+        const {username} = req && req.body;
+        
+        const {acknowledged} = response;
+        console.log(">>>response acknowledged", acknowledged);
+
+        if(acknowledged && username && (sessionRole==="client")){
+            console.log("refresh login session");
+            const loginInfo = {
+                username,
+                role: sessionRole,
+                store: sessionOrganization
+            }
+            const token = jwt.sign(loginInfo, SECRET_KEY as string, {expiresIn: '10m'});
+            const refreshToken = jwt.sign(loginInfo, SECRET_REFRESH_KEY as string, {expiresIn: '10m'});
+
+            res.cookie('sessionUsername', username, {sameSite: 'none', secure: true} );
+            res.cookie('sessionToken', token, {sameSite: 'none', secure: true});
+            res.cookie('sessionRefreshToken', refreshToken, {sameSite: 'none', secure: true});
+            res.cookie('sessionRole', sessionRole, {sameSite: 'none', secure: true} );
+            res.cookie('sessionOrganization', sessionOrganization, {sameSite: 'none', secure: true} );
+
+            console.log(">>>loggin session is refreshed")
+        };
 
         //response
         log(`response ${controllerName} at ${group}`, response);

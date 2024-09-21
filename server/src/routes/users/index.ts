@@ -32,21 +32,21 @@ usersRoute.post(
 usersRoute.get(
     '/',
     // usersGetMiddlewares,
-    [],
+    usersGetMiddlewares,
     getController
 )
 
 usersRoute.put(
     '/',
     // usersPutMiddlewares,
-    [],
+    usersPutMiddlewares,
     updateController
 )
 
 usersRoute.delete(
     '/one/:username',
     // usersDeleteMiddlewares,
-    [],
+    usersDeleteMiddlewares,
     deleteController
 )
 

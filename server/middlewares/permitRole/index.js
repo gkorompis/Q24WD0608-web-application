@@ -26,6 +26,9 @@ const Unit = (permittedRoles, endpoint) => {
             ;
             //modify default query for role member
             if (sessionRole !== "admin") {
+                console.log('>>> only admin store self', endpoint);
+                const { query } = req;
+                req.query = Object.assign({}, query);
                 if (endpoint == "transactions") {
                     const httpMethod = req && req.method;
                     console.log(">>>requestMethod", httpMethod);
@@ -54,11 +57,6 @@ const Unit = (permittedRoles, endpoint) => {
                         console.log(">>>reqQuery2", req.query);
                     }
                 }
-                else {
-                    console.log('>>> only admin store self', endpoint);
-                    const { query } = req;
-                    req.query = Object.assign({}, query);
-                }
                 if (endpoint == "products") {
                     const httpMethod = req && req.method;
                     console.log(">>>requestMethod", httpMethod);
@@ -85,10 +83,44 @@ const Unit = (permittedRoles, endpoint) => {
                         console.log(">>>reqQuery2", req.query);
                     }
                 }
-                else {
-                    console.log('>>> only admin store self', endpoint);
+                if (endpoint == "users") {
+                    const httpMethod = req && req.method;
+                    console.log(">>>requestMethod", httpMethod);
+                    console.log('>>> modifying default query for members', endpoint);
                     const { query } = req;
-                    req.query = Object.assign({}, query);
+                    req.query = Object.assign(Object.assign({}, query), { username: sessionUsername, store: sessionOrganization });
+                    console.log(">>>reqQuery", req.query);
+                    if (httpMethod == "PUT") {
+                        let { query2 } = req.query;
+                        query2 = { $and: [
+                                Object.assign({}, query2),
+                                // {permission: {$in: [sessionUsername]}}
+                            ] };
+                        req.query = Object.assign(Object.assign({}, req.query), { query2 });
+                        console.log(">>>reqQuery2", req.query);
+                        // don't allow client to modify these fields
+                    }
+                    if (httpMethod == "DELETE") {
+                        let { query2 } = req.query;
+                        query2 = { $and: [
+                                Object.assign({}, query2),
+                                // {permission: {$in: [sessionUsername]}}
+                            ] };
+                        req.query = Object.assign(Object.assign({}, req.query), { query2 });
+                        console.log(">>>reqQuery2", req.query);
+                    }
+                }
+            }
+            else {
+                console.log('>>> only admin store self', endpoint);
+                const { query } = req;
+                req.query = Object.assign({}, query);
+                if (endpoint == "users") {
+                    // can only edit status in users endpoint
+                    const { body } = req;
+                    const { status } = body;
+                    const updatedStatus = status || "active";
+                    req.body = { status: updatedStatus };
                 }
             }
             console.log(">>> passed role permission", sessionRole, req.query);

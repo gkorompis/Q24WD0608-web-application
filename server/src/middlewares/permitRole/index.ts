@@ -17,6 +17,11 @@ const Unit = (permittedRoles: string[], endpoint?: string) =>{
 
             //modify default query for role member
             if(sessionRole!=="admin"){
+
+                console.log('>>> only admin store self', endpoint)
+                const {query} = req;
+                req.query = {...query}
+
                 if(endpoint=="transactions"){
                     const httpMethod = req && req.method;
                     console.log(">>>requestMethod",httpMethod);
@@ -50,11 +55,7 @@ const Unit = (permittedRoles: string[], endpoint?: string) =>{
                         req.query = {...req.query, query2};
                         console.log(">>>reqQuery2", req.query)
                     }
-                } else {
-                    console.log('>>> only admin store self', endpoint)
-                    const {query} = req;
-                    req.query = {...query}
-                }
+                } 
 
                 if(endpoint=="products"){
                     const httpMethod = req && req.method;
@@ -87,11 +88,63 @@ const Unit = (permittedRoles: string[], endpoint?: string) =>{
                         req.query = {...req.query, query2};
                         console.log(">>>reqQuery2", req.query)
                     }
-                } else {
-                    console.log('>>> only admin store self', endpoint)
+                } 
+
+                if(endpoint=="users"){
+                    const httpMethod = req && req.method;
+                    console.log(">>>requestMethod",httpMethod);
+                    
+                    console.log('>>> modifying default query for members', endpoint)
                     const {query} = req;
-                    req.query = {...query}
+                    req.query = {...query, 
+                        username: sessionUsername, 
+                        store: sessionOrganization,
+                        // query2: {stakeholder: {$in: [sessionUsername]}} <<- this one will be useful if there are certain document that can be accessed by multiple clients
+                    }
+                    
+                    console.log(">>>reqQuery", req.query);
+
+                    if(httpMethod=="PUT"){
+                        let {query2} = req.query as any;
+                        
+                        query2 = {$and:[ 
+                            {...query2}, 
+                            // {permission: {$in: [sessionUsername]}}
+                        ]};
+                        req.query = {...req.query, query2};
+                        console.log(">>>reqQuery2", req.query)
+                        
+                        
+
+                        // don't allow client to modify these fields
+                        
+                    }
+
+                    if(httpMethod=="DELETE"){
+                        let {query2} = req.query as any;
+                        query2 = {$and:[ 
+                            {...query2}, 
+                            // {permission: {$in: [sessionUsername]}}
+                        ]};
+                        req.query = {...req.query, query2};
+                        console.log(">>>reqQuery2", req.query)
+                    }
+
+                } 
+               
+            } else {
+                console.log('>>> only admin store self', endpoint)
+                const {query} = req;
+                req.query = {...query}
+
+                if(endpoint=="users"){
+                    // can only edit status in users endpoint
+                    const {body} = req;
+                    const {status} = body;
+                    const updatedStatus = status || "active";
+                    req.body = {status: updatedStatus};
                 }
+
             }
             
             console.log(">>> passed role permission", sessionRole, req.query);

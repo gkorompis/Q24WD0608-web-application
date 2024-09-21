@@ -3,7 +3,8 @@ import {
     hashPassword,
     permitRole,
     authenticateToken,
-    setXRequestIdHeader
+    setXRequestIdHeader,
+    protectField
 } from  "../../middlewares/index.js";
 
 
@@ -15,17 +16,23 @@ export const usersPostMiddlewares = [
 export const usersGetMiddlewares = [
     setXRequestIdHeader,
     authenticateToken,
-    permitRole(['admin', 'member']),
+    permitRole(['admin', 'client'], 'users'), //<<-- endpoint as input signify the necessity to restrict self
 ]
 export const usersGetOneMiddlewares = [
     setXRequestIdHeader,
     authenticateToken,
-    permitRole(['admin', 'member']),
+    permitRole(['admin', 'client'], 'users'),
 ]
 export const usersPutMiddlewares = [
     setXRequestIdHeader,
+    restrictRegistration,
     authenticateToken,
-    permitRole(['admin', 'officer', 'member']),
+    permitRole(['admin', 'client'], 'users'),
+    protectField([
+        '_id',
+        'role',
+        'store'
+    ])
 ]
 export const usersDeleteMiddlewares = [
     setXRequestIdHeader,

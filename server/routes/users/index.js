@@ -1,6 +1,6 @@
 import express from 'express';
 import { UsersController } from '../../controllers/index.js';
-import { usersPostMiddlewares } from './middleware.js';
+import { usersPostMiddlewares, usersGetMiddlewares, usersPutMiddlewares, usersDeleteMiddlewares } from './middleware.js';
 const app = express();
 app.use(express.json());
 const usersRoute = express.Router();
@@ -8,11 +8,11 @@ const { postController, getController, updateController, deleteController } = Us
 usersRoute.post('/', usersPostMiddlewares, postController);
 usersRoute.get('/', 
 // usersGetMiddlewares,
-[], getController);
+usersGetMiddlewares, getController);
 usersRoute.put('/', 
 // usersPutMiddlewares,
-[], updateController);
+usersPutMiddlewares, updateController);
 usersRoute.delete('/one/:username', 
 // usersDeleteMiddlewares,
-[], deleteController);
+usersDeleteMiddlewares, deleteController);
 export default usersRoute;
